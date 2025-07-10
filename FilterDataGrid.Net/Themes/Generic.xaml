@@ -731,6 +731,7 @@
                     <CheckBox
                       x:Name="CheckBox"
                       Width="Auto"
+                      Margin="0,0,0,0"
                       HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch"
                       Command="{x:Static control:FilterDataGrid.IsChecked}"
@@ -752,7 +753,7 @@
                     </CheckBox>
                     <DataTemplate.Triggers>
                       <DataTrigger Binding="{Binding Level}" Value="1">
-                        <Setter TargetName="CheckBox" Property="Margin" Value="4,0,0,0" />
+                        <Setter TargetName="CheckBox" Property="Margin" Value="0,0,0,0" />
                       </DataTrigger>
                     </DataTemplate.Triggers>
                   </DataTemplate>
