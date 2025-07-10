@@ -731,7 +731,7 @@
                     <CheckBox
                       x:Name="CheckBox"
                       Width="Auto"
-                      Margin="0,0,0,0"
+                      Margin="5,0,0,0"
                       HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch"
                       Command="{x:Static control:FilterDataGrid.IsChecked}"
@@ -753,7 +753,7 @@
                     </CheckBox>
                     <DataTemplate.Triggers>
                       <DataTrigger Binding="{Binding Level}" Value="1">
-                        <Setter TargetName="CheckBox" Property="Margin" Value="0,0,0,0" />
+                        <Setter TargetName="CheckBox" Property="Margin" Value="5,0,0,0" />
                       </DataTrigger>
                     </DataTemplate.Triggers>
                   </DataTemplate>
@@ -786,6 +786,7 @@
                     <StackPanel Orientation="Horizontal">
                       <CheckBox
                         x:Name="CheckBoxTree"
+                        Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Content="{Binding Label}"
                         Focusable="False"
@@ -793,7 +794,7 @@
                     </StackPanel>
                     <DataTemplate.Triggers>
                       <DataTrigger Binding="{Binding Level}" Value="1">
-                        <Setter TargetName="CheckBoxTree" Property="Margin" Value="4,0,0,0" />
+                        <Setter TargetName="CheckBoxTree" Property="Margin" Value="5,0,0,0" />
                       </DataTrigger>
                     </DataTemplate.Triggers>
                   </HierarchicalDataTemplate>
