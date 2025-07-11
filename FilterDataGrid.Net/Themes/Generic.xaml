@@ -584,19 +584,20 @@
                 BorderBrush="Transparent"
                 BorderThickness="1">
 
-                <TextBox
+                <hc:TextBox
                   x:Name="SearchBox"
                   HorizontalAlignment="Stretch"
                   VerticalContentAlignment="Center"
+                  hc:InfoElement.ShowClearButton="True"
                   AcceptsReturn="False"
                   DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
                   Focusable="True"
                   TabIndex="1"
                   Tag="{Binding Translate.Contains}">
-                  <TextBox.InputBindings>
+                  <hc:TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{x:Static control:FilterDataGrid.ApplyFilter}" />
-                  </TextBox.InputBindings>
-                </TextBox>
+                  </hc:TextBox.InputBindings>
+                </hc:TextBox>
               </Border>
               <Grid.Style>
                 <Style TargetType="Grid">
