@@ -664,6 +664,15 @@
                   <Style BasedOn="{StaticResource ListBoxItemBaseStyle.Small}" TargetType="{x:Type ListBoxItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                          <Border Background="Transparent">
+                            <ContentPresenter />
+                          </Border>
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
                   </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
