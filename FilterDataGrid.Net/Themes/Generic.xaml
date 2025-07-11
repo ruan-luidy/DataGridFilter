@@ -543,41 +543,6 @@
               Foreground="{DynamicResource PrimaryTextBrush}"
               Style="{StaticResource ButtonDefault}"
               TabIndex="0">
-                        <Border
-                          x:Name="BorderContent"
-                          Padding="{TemplateBinding Padding}"
-                          BorderBrush="Transparent"
-                          BorderThickness="0.5"
-                              <ColumnDefinition Width="*" />
-                              Margin="0,0,10,0"
-                              HorizontalAlignment="Center"
-                              Fill="{TemplateBinding Foreground}"
-                              Stretch="Uniform" />
-                              HorizontalAlignment="Stretch"
-                              <TextBlock.Text>
-                                    <Binding
-                                      Path="Translate.Clear"
-                                      UpdateSourceTrigger="PropertyChanged" />
-                                    <Binding ElementName="ClearFilterBnt" Path="Content" />
-                                    <Binding Path="Translate.Culture" />
-                                  </MultiBinding.Bindings>
-                                </MultiBinding>
-                              </TextBlock.Text>
-                            </TextBlock>
-                          </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                          <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="BorderContent" Property="Opacity" Value="0.7" />
-                            <Setter Property="Cursor" Value="Hand" />
-                          </Trigger>
-                          <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Opacity" Value="0.5" />
-                          </Trigger>
-                          <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                          </Trigger>
-                        </ControlTemplate.Triggers>
               <Button.ContentTemplate>
                 <DataTemplate>
                   <Grid>
