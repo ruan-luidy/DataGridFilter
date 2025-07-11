@@ -61,22 +61,13 @@
 
   <!-- Additional Package Items -->
   <ItemGroup>
-    <None Include="..\..\NuGet\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\NuGet\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\..\NuGet\Readme.txt">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HandyControl" Version="3.5.1" />
   </ItemGroup>
 
 </Project>

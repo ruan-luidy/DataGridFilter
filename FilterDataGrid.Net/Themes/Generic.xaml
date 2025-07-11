@@ -3,6 +3,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:control="clr-namespace:FilterDataGrid"
   xmlns:converters="clr-namespace:FilterDataGrid.Converters"
+  xmlns:hc="https://handyorg.github.io/handycontrol"
   xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
   <!--  ICON  -->
@@ -399,7 +400,7 @@
   </Style>
 
   <!--  DATAGRID COLUMN HEADER STYLE  -->
-  <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="DataGridColumnHeader">
+  <Style BasedOn="{StaticResource DataGridColumnHeaderStyle}" TargetType="DataGridColumnHeader">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
   </Style>
 
@@ -534,55 +535,28 @@
             <Button
               x:Name="ClearFilterBnt"
               Grid.Row="0"
-              Grid.Column="0"
-              Grid.ColumnSpan="2"
-              Margin="2,10,2,2"
-              Padding="4"
+              Grid.Column="2"
+              Margin="0,4,4,2"
               HorizontalAlignment="Stretch"
               Command="{x:Static control:FilterDataGrid.RemoveFilter}"
               Content="{Binding Path=Content, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridColumnHeader}}, UpdateSourceTrigger=PropertyChanged}"
-              FontSize="13"
-              Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
+              Foreground="{DynamicResource PrimaryTextBrush}"
+              Style="{StaticResource ButtonDefault}"
               TabIndex="0">
-              <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                  <Setter Property="Template">
-                    <Setter.Value>
-                      <ControlTemplate TargetType="{x:Type Button}">
                         <Border
                           x:Name="BorderContent"
                           Padding="{TemplateBinding Padding}"
                           BorderBrush="Transparent"
                           BorderThickness="0.5"
-                          UseLayoutRounding="True">
-                          <Grid
-                            x:Name="ContentGrid"
-                            Background="Transparent"
-                            SnapsToDevicePixels="False"
-                            UseLayoutRounding="True">
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="Auto" />
                               <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Path
-                              Grid.Column="0"
-                              Width="20"
                               Margin="0,0,10,0"
                               HorizontalAlignment="Center"
-                              Data="{DynamicResource FilterDelete}"
                               Fill="{TemplateBinding Foreground}"
                               Stretch="Uniform" />
-                            <TextBlock
-                              x:Name="ContentPresenter"
-                              Grid.Column="1"
                               HorizontalAlignment="Stretch"
-                              DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}">
                               <TextBlock.Text>
-                                <MultiBinding Converter="{StaticResource StringFormatConverter}" ConverterParameter="Culture">
-                                  <MultiBinding.Bindings>
                                     <Binding
                                       Path="Translate.Clear"
-                                      TargetNullValue=""
                                       UpdateSourceTrigger="PropertyChanged" />
                                     <Binding ElementName="ClearFilterBnt" Path="Content" />
                                     <Binding Path="Translate.Culture" />
@@ -604,60 +578,68 @@
                             <Setter Property="Opacity" Value="0.5" />
                           </Trigger>
                         </ControlTemplate.Triggers>
-                      </ControlTemplate>
-                    </Setter.Value>
-                  </Setter>
-                </Style>
-              </Button.Style>
+              <Button.ContentTemplate>
+                <DataTemplate>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Path
+                      Grid.Column="0"
+                      Width="20"
+                      Margin="0,0,10,0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="{DynamicResource FilterDelete}"
+                      Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                      Stretch="Uniform" />
+                    <TextBlock
+                      Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}">
+                      <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource StringFormatConverter}" ConverterParameter="Culture">
+                          <MultiBinding.Bindings>
+                            <Binding
+                              Path="Translate.Clear"
+                              TargetNullValue=""
+                              UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="Content" RelativeSource="{RelativeSource AncestorType=Button}" />
+                            <Binding Path="Translate.Culture" />
+                          </MultiBinding.Bindings>
+                        </MultiBinding>
+                      </TextBlock.Text>
+                    </TextBlock>
+                  </Grid>
+                </DataTemplate>
+              </Button.ContentTemplate>
             </Button>
 
             <!--  Row 1: SEPARATOR / SEARCH BOX  -->
             <Grid Grid.Row="1" Grid.Column="1">
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
-
-              <!--  Row 1: SEPARATOR  -->
-              <Separator
-                Grid.Row="0"
-                Margin="0,2"
-                Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}, Mode=FindAncestor, AncestorLevel=1}, Path=BorderBrush}" />
 
               <!--  Row 2: SEARCH BOX  -->
               <Border
-                Grid.Row="1"
                 Margin="0,4,4,2"
-                Padding="0,2"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}, Mode=FindAncestor, AncestorLevel=1}, Path=BorderBrush}"
+                BorderBrush="Transparent"
                 BorderThickness="1">
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                  </Grid.ColumnDefinitions>
 
-                  <TextBox
-                    x:Name="SearchBox"
-                    Grid.Column="0"
-                    Margin="0"
-                    Padding="2,0,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    AcceptsReturn="False"
-                    DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
-                    Focusable="True"
-                    FontSize="13"
-                    Style="{StaticResource PlaceHolder}"
-                    TabIndex="1"
-                    Tag="{Binding Translate.Contains}">
-                    <TextBox.InputBindings>
-                      <KeyBinding Key="Enter" Command="{x:Static control:FilterDataGrid.ApplyFilter}" />
-                    </TextBox.InputBindings>
-                  </TextBox>
-                </Grid>
+                <TextBox
+                  x:Name="SearchBox"
+                  HorizontalAlignment="Stretch"
+                  VerticalContentAlignment="Center"
+                  AcceptsReturn="False"
+                  DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
+                  Focusable="True"
+                  TabIndex="1"
+                  Tag="{Binding Translate.Contains}">
+                  <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{x:Static control:FilterDataGrid.ApplyFilter}" />
+                  </TextBox.InputBindings>
+                </TextBox>
               </Border>
               <Grid.Style>
                 <Style TargetType="Grid">
@@ -721,7 +703,7 @@
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 TabIndex="2">
                 <ListBox.ItemContainerStyle>
-                  <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
+                  <Style BasedOn="{StaticResource ListBoxItemBaseStyle.Small}" TargetType="{x:Type ListBoxItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                   </Style>
@@ -800,7 +782,7 @@
                   </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
                 <TreeView.ItemContainerStyle>
-                  <Style BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="{x:Type TreeViewItem}">
+                  <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
                     <Setter Property="OverridesDefaultStyle" Value="True" />
                     <Setter Property="IsExpanded" Value="False" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
