@@ -86,109 +86,12 @@
               </TextBox.Style>
             </TextBox>
 
-            <!--  Col:1 BUTTON CLEAR FILTER  -->
-            <Button
-              x:Name="ClearSearchBoxBtn"
-              Grid.Column="1"
-              Margin="2"
-              Background="Transparent"
-              Command="{x:Static control:FilterDataGrid.ClearSearchBox}"
-              Focusable="False">
-              <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                  <Setter Property="Template">
-                    <Setter.Value>
-                      <ControlTemplate TargetType="Button">
-                        <Border
-                          Background="Transparent"
-                          SnapsToDevicePixels="False"
-                          UseLayoutRounding="True">
-                          <Viewbox>
-                            <!--  MAGNIFIER / DELETE ICON  Width="18"  -->
-                            <Path
-                              x:Name="PathButton"
-                              Height="18"
-                              Margin="0"
-                              Data="{DynamicResource Delete}"
-                              Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
-                              Stretch="Uniform"
-                              Stroke="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
-                              StrokeThickness="1" />
-                          </Viewbox>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                          <DataTrigger Binding="{Binding ElementName=TextSource, Path=Text}" Value="">
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Setter TargetName="PathButton" Property="Data" Value="{DynamicResource Magnifier}" />
-                            <Setter TargetName="PathButton" Property="StrokeThickness" Value="0" />
-                          </DataTrigger>
-                          <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter TargetName="PathButton" Property="StrokeThickness" Value="1" />
-                            <Setter TargetName="PathButton" Property="Fill" Value="Red" />
-                            <Setter TargetName="PathButton" Property="Stroke" Value="Red" />
-                          </Trigger>
-                        </ControlTemplate.Triggers>
-                      </ControlTemplate>
-                    </Setter.Value>
-                  </Setter>
-                </Style>
-              </Button.Style>
-            </Button>
-
             <!--  Col:2 SEPARATOR  -->
             <Border
               Grid.Column="2"
               Width="1"
               Margin="2,0,2,0"
               Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}, Mode=FindAncestor, AncestorLevel=1}, Path=BorderBrush}" />
-
-            <!--  Col:3  TOGGLE BUTTON  -->
-            <ToggleButton
-              Name="SearchToggleButton"
-              Grid.Column="3"
-              Width="21"
-              Margin="3,0"
-              VerticalAlignment="Stretch"
-              Background="Transparent"
-              Cursor="Hand"
-              DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
-              Focusable="False"
-              IsChecked="{Binding StartsWith, UpdateSourceTrigger=PropertyChanged}"
-              ToolTip="{Binding Translate.Toggle}">
-              <ToggleButton.Style>
-                <Style TargetType="{x:Type ToggleButton}">
-                  <Setter Property="Cursor" Value="Hand" />
-                  <Setter Property="Template">
-                    <Setter.Value>
-                      <ControlTemplate TargetType="ToggleButton">
-                        <Grid
-                          Background="Transparent"
-                          SnapsToDevicePixels="False"
-                          UseLayoutRounding="True">
-                          <Viewbox>
-                            <Path
-                              x:Name="PathToggle"
-                              VerticalAlignment="Center"
-                              Data="{DynamicResource Contains}"
-                              Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
-                              Stretch="Uniform" />
-                          </Viewbox>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                          <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="PathToggle" Property="Data" Value="{DynamicResource StartsWith}" />
-                          </Trigger>
-                          <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PathToggle" Property="Opacity" Value="0.6" />
-                          </Trigger>
-                        </ControlTemplate.Triggers>
-                      </ControlTemplate>
-                    </Setter.Value>
-                  </Setter>
-                </Style>
-              </ToggleButton.Style>
-            </ToggleButton>
           </Grid>
 
           <!--  PLACEHOLDER TEXT  -->
