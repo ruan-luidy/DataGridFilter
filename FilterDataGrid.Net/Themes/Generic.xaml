@@ -53,7 +53,6 @@
               Focusable="True"
               FontSize="{TemplateBinding FontSize}"
               FontWeight="{TemplateBinding FontWeight}"
-              Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
               MaxLength="{TemplateBinding MaxLength}"
               Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox
@@ -71,7 +70,6 @@
               Focusable="False"
               FontSize="{TemplateBinding FontSize}"
               FontWeight="{TemplateBinding FontWeight}"
-              Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
               MaxLength="{TemplateBinding MaxLength}"
               Text="{TemplateBinding Tag}">
               <TextBox.Style>
@@ -161,28 +159,7 @@
                         Cursor="Hand"
                         ToolTip="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Translate.RemoveAll}"
                         ToolTipService.Placement="Left"
-                        ToolTipService.VerticalOffset="24">
-                        <Button.Content>
-                          <Grid SnapsToDevicePixels="False" UseLayoutRounding="True">
-                            <Path
-                              Width="13"
-                              Data="{DynamicResource Recycle}"
-                              Stretch="Uniform">
-                              <Path.Style>
-                                <Style TargetType="Path">
-                                  <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}" />
-                                  <Setter Property="Opacity" Value="0.5" />
-                                  <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ButtonRemoveAll, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                      <Setter Property="Opacity" Value="1" />
-                                    </DataTrigger>
-                                  </Style.Triggers>
-                                </Style>
-                              </Path.Style>
-                            </Path>
-                          </Grid>
-                        </Button.Content>
-                      </Button>
+                        ToolTipService.VerticalOffset="24" />
 
                       <!--  SELECT ALL BUTTON  -->
                       <Button
@@ -322,7 +299,7 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Data="{StaticResource Filter}"
-        Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=Foreground}"
+        Fill="{StaticResource PrimaryTextBrush}"
         Stretch="Uniform" />
     </Border>
     <ControlTemplate.Triggers>
@@ -388,33 +365,11 @@
         IsOpen="False"
         PlacementTarget="{Binding ElementName=ContainerFilterGrid}"
         StaysOpen="{StaticResource StayOpen}">
-        <Popup.Resources>
-          <!--
-          Fix default background color of border when value is not provided
-
-          **** DOES NOT WORK if parent is a Page or UserControl (cannot find parent window) ****
-
-          <SolidColorBrush
-          x:Key="BackgroundColor"
-          Opacity="1"
-          Color="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=Background, Converter={StaticResource SolidBrushToColorConverter}}" />
-
-          Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=FilterPopupBackground},
-          TargetNullValue={StaticResource BackgroundColor}"
-          -->
-
-          <SolidColorBrush
-            x:Key="BorderColor"
-            Opacity="0.4"
-            Color="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground, Converter={StaticResource SolidBrushToColorConverter}}" />
-        </Popup.Resources>
-
         <Border
           x:Name="PopUpBorder"
           Padding="0"
-          Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=FilterPopupBackground}"
-          BorderBrush="{StaticResource BorderColor}"
-          BorderThickness="1">
+          BorderThickness="1"
+          Style="{StaticResource BorderRegion}">
           <Grid
             x:Name="SizableContentGrid"
             MinWidth="{StaticResource PopupWidth}"
@@ -478,30 +433,22 @@
 
             <!--  Row 1: SEPARATOR / SEARCH BOX  -->
             <Grid Grid.Row="1" Grid.Column="1">
-
-              <!--  Row 2: SEARCH BOX  -->
-              <Border
+              <hc:TextBox
+                x:Name="SearchBox"
                 Margin="0,4,4,2"
+                HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                BorderThickness="1">
-
-                <hc:TextBox
-                  x:Name="SearchBox"
-                  HorizontalAlignment="Stretch"
-                  VerticalContentAlignment="Center"
-                  hc:InfoElement.ShowClearButton="True"
-                  AcceptsReturn="False"
-                  DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
-                  Focusable="True"
-                  TabIndex="1"
-                  Tag="{Binding Translate.Contains}">
-                  <hc:TextBox.InputBindings>
-                    <KeyBinding Key="Enter" Command="{x:Static control:FilterDataGrid.ApplyFilter}" />
-                  </hc:TextBox.InputBindings>
-                </hc:TextBox>
-              </Border>
+                VerticalContentAlignment="Center"
+                hc:InfoElement.ShowClearButton="True"
+                AcceptsReturn="False"
+                DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}}"
+                Focusable="True"
+                TabIndex="1"
+                Tag="{Binding Translate.Contains}">
+                <hc:TextBox.InputBindings>
+                  <KeyBinding Key="Enter" Command="{x:Static control:FilterDataGrid.ApplyFilter}" />
+                </hc:TextBox.InputBindings>
+              </hc:TextBox>
               <Grid.Style>
                 <Style TargetType="Grid">
                   <Setter Property="Visibility" Value="Visible" />
@@ -525,9 +472,9 @@
               VerticalAlignment="Top"
               Panel.ZIndex="0"
               Data="{DynamicResource FilterChecked}"
-              Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
+              Fill="{DynamicResource PrimaryTextBrush}"
               Stretch="Fill"
-              Stroke="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
+              Stroke="{StaticResource PrimaryTextBrush}"
               StrokeThickness="0.2">
               <Path.Style>
                 <Style TargetType="Path">
@@ -734,7 +681,7 @@
                               Data="{DynamicResource GripSizeIcon}"
                               Opacity="0.5"
                               Stretch="None"
-                              Stroke="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:FilterDataGrid}}, Path=Foreground}"
+                              Stroke="{DynamicResource PrimaryTextBrush}"
                               StrokeThickness="1" />
                             <Grid.Style>
                               <Style TargetType="{x:Type Grid}">
