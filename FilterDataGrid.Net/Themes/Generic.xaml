@@ -9,6 +9,7 @@
   <!--  ICON  -->
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/FilterDataGrid;component/Themes/Icons.xaml" />
+    <ResourceDictionary Source="/FilterDataGrid;component/Themes/SFSymbols.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <!--  CONVERTERS  -->
@@ -282,6 +283,39 @@
   <!--  DATAGRID COLUMN HEADER STYLE  -->
   <Style BasedOn="{StaticResource DataGridColumnHeaderStyle}" TargetType="DataGridColumnHeader">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="DataGridColumnHeader">
+          <hc:SimplePanel>
+            <Border
+              Padding="{TemplateBinding Padding}"
+              Background="Transparent"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}">
+              <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter
+                  VerticalAlignment="Center"
+                  RecognizesAccessKey="True"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <!--  Removido o ToggleButtonSortDirection que aparecia na ordenação  -->
+              </Grid>
+            </Border>
+            <Thumb
+              x:Name="PART_LeftHeaderGripper"
+              HorizontalAlignment="Left"
+              Style="{StaticResource ColumnHeaderGripperStyle}" />
+            <Thumb
+              x:Name="PART_RightHeaderGripper"
+              HorizontalAlignment="Right"
+              Style="{StaticResource ColumnHeaderGripperStyle}" />
+          </hc:SimplePanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <!--  FILTER BUTTON CONTROLTEMPLATE  -->
@@ -304,11 +338,11 @@
     </Border>
     <ControlTemplate.Triggers>
       <Trigger Property="control:FilterState.IsFiltered" Value="True">
-        <Setter TargetName="PathFilterIcon" Property="Data" Value="{StaticResource FilterSet}" />
+        <Setter TargetName="PathFilterIcon" Property="Data" Value="{StaticResource SF.ChevronUp}" />
         <Setter Property="Opacity" Value="0.8" />
       </Trigger>
       <Trigger Property="control:FilterState.IsFiltered" Value="False">
-        <Setter TargetName="PathFilterIcon" Property="Data" Value="{StaticResource Filter}" />
+        <Setter TargetName="PathFilterIcon" Property="Data" Value="{StaticResource SF.ChevronDown}" />
         <Setter Property="Opacity" Value="0.5" />
       </Trigger>
       <Trigger Property="IsMouseOver" Value="True">
@@ -345,6 +379,7 @@
           Grid.Column="1"
           Width="19"
           Height="19"
+          Margin="5,0,0,0"
           control:FilterState.IsFiltered="False"
           Command="{x:Static control:FilterDataGrid.ShowFilter}"
           Cursor="Hand">
